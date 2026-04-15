@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Jardins du Roi — Bienvenue</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+            color: #3d2817;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '⚜';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 400px;
+            color: #d4af37;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            background: #faf6f0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-out forwards;
+            background-image:
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,69,19,0.03) 2px, rgba(139,69,19,0.03) 4px),
+                repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139,69,19,0.03) 2px, rgba(139,69,19,0.03) 4px);
+            background-color: #faf6f0;
+        }
+
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Ornements de coin */
+        .corner-ornament {
+            position: absolute;
+            width: 60px; height: 60px;
+            font-size: 40px;
+            color: #d4af37;
+            opacity: 0.7;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .corner-ornament.top-left    { top: 10px;    left: 10px; }
+        .corner-ornament.top-right   { top: 10px;    right: 10px; }
+        .corner-ornament.bottom-left { bottom: 10px; left: 10px; }
+        .corner-ornament.bottom-right{ bottom: 10px; right: 10px; }
+        .corner-ornament::before { content: '✦'; }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #8b4513 0%, #6b3410 100%);
+            color: #f5e6d3;
+            padding: 50px 20px 40px;
+            text-align: center;
+            border-bottom: 4px solid #d4af37;
+            position: relative;
+        }
+
+        .header .brand {
+            font-size: 13px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            opacity: 0.75;
+            margin-bottom: 18px;
+        }
+
+        .fleur-de-lys {
+            font-size: 60px;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+            display: block;
+        }
+
+        .header h1 {
+            font-size: 34px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .header .subtitle {
+            font-size: 19px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Sceau de cire */
+        .wax-seal {
+            position: absolute;
+            top: -35px;
+            right: 30px;
+            width: 90px; height: 90px;
+            background: radial-gradient(circle at 35% 35%, #e74c3c, #c0392b, #8b0000);
+            border-radius: 50%;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.5), inset -3px -3px 6px rgba(0,0,0,0.4), inset 3px 3px 6px rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 45px;
+            transform: rotate(-18deg);
+            z-index: 10;
+            border: 3px solid #7a0000;
+        }
+        .wax-seal::before { content: '⚜️'; filter: brightness(0.85) contrast(1.2); }
+
+        /* Barre de progression (vide pour la page accueil) */
+        .progress-bar {
+            background: linear-gradient(to right, #8b4513, #6b3410, #8b4513);
+            padding: 18px 25px;
+            text-align: center;
+            color: #f5e6d3;
+            font-size: 17px;
+            position: relative;
+            border-bottom: 3px solid #d4af37;
+        }
+        .progress-bar::before { content: '✦'; position: absolute; left: 25px; font-size: 22px; color: #d4af37; }
+        .progress-bar::after  { content: '✦'; position: absolute; right: 25px; font-size: 22px; color: #d4af37; }
+
+        .progress-dots { display: inline-flex; gap: 10px; align-items: center; margin: 0 15px; }
+        .progress-dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(212,175,55,0.5);
+        }
+
+        /* Contenu */
+        .content { padding: 45px 35px; }
+
+        /* Bloc de vérification "tout fonctionne" */
+        .check-block {
+            background: linear-gradient(135deg, #e8f5e9 0%, #dff0e0 100%);
+            border: 2px solid #66bb6a;
+            border-radius: 14px;
+            padding: 25px 30px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .check-block .check-icon {
+            font-size: 52px;
+            display: block;
+            margin-bottom: 12px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .check-block h2 {
+            font-size: 22px;
+            color: #2e7d32;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+        .check-block p {
+            color: #388e3c;
+            font-size: 16px;
+            font-style: italic;
+        }
+
+        /* Diviseur ornemental */
+        .divider {
+            height: 3px;
+            background: linear-gradient(to right, transparent, #d4af37, transparent);
+            margin: 40px 0;
+            position: relative;
+        }
+        .divider::after {
+            content: '❖';
+            position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+            background: #faf6f0; color: #d4af37; padding: 0 20px; font-size: 16px;
+        }
+
+        /* Bloc parchemin — message de bienvenue */
+        .parchment-block {
+            background: linear-gradient(135deg, #fdf3e3 0%, #f5e6cc 100%);
+            border: 2px solid #c8a96e;
+            border-radius: 12px;
+            padding: 30px 35px;
+            margin-bottom: 40px;
+            box-shadow: inset 0 2px 8px rgba(139,69,19,0.1), 0 4px 15px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        .parchment-block::before {
+            content: '📜';
+            position: absolute; top: -15px; left: 20px;
+            font-size: 28px; background: #faf6f0; padding: 0 8px;
+        }
+        .parchment-block .salutation {
+            font-size: 18px;
+            font-style: italic;
+            color: #5a3520;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .parchment-block p {
+            font-style: italic;
+            line-height: 1.9;
+            color: #5a3520;
+            font-size: 16px;
+            margin-bottom: 14px;
+        }
+        .parchment-block p:last-child { margin-bottom: 0; }
+        .parchment-block strong { color: #8b4513; font-style: normal; }
+        .parchment-block .signature {
+            text-align: right;
+            margin-top: 20px;
+            font-size: 15px;
+            color: #8b4513;
+            font-style: italic;
+            border-top: 1px solid #c8a96e;
+            padding-top: 15px;
+        }
+
+        /* Règles du jeu */
+        .rules-block {
+            background: linear-gradient(135deg, #faf6f0 0%, #f0e8d8 100%);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 28px 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .rules-block h3 {
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #8b4513;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .rules-block h3::before,
+        .rules-block h3::after { content: ' ✦ '; color: #d4af37; }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(212,175,55,0.2);
+        }
+        .rule-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .rule-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+        .rule-text { font-size: 15px; color: #5a3520; line-height: 1.6; font-style: italic; }
+        .rule-text strong { color: #8b4513; font-style: normal; }
+
+        /* Pied de page */
+        .footer {
+            background: linear-gradient(135deg, #8b4513 0%, #6b3410 100%);
+            color: #f5e6d3;
+            padding: 25px 20px;
+            text-align: center;
+            border-top: 4px solid #d4af37;
+        }
+        .footer .footer-fleur { font-size: 30px; display: block; margin-bottom: 8px; }
+        .footer p { font-size: 14px; opacity: 0.8; font-style: italic; letter-spacing: 1px; }
+        .footer .footer-brand {
+            font-size: 12px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="corner-ornament top-left"></div>
+    <div class="corner-ornament top-right"></div>
+    <div class="corner-ornament bottom-left"></div>
+    <div class="corner-ornament bottom-right"></div>
+
+    <!-- Header -->
+    <div class="header" style="position:relative;">
+        <div class="wax-seal"></div>
+        <div class="brand">Les Jardins du Roi</div>
+        <span class="fleur-de-lys">⚜️</span>
+        <h1>Bienvenue,<br>Noble Visiteur</h1>
+        <div class="subtitle">Le labyrinthe vous attend…</div>
+    </div>
+
+    <!-- Barre de progression vide -->
+    <div class="progress-bar">
+        <div class="progress-dots">
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+            <div class="progress-dot"></div>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- Confirmation que tout fonctionne -->
+        <div class="check-block">
+            <span class="check-icon">✅</span>
+            <h2>Votre parchemin est prêt !</h2>
+            <p>Votre téléphone fonctionne parfaitement.<br>L'aventure peut commencer.</p>
+        </div>
+
+        <!-- Message de bienvenue -->
+        <div class="parchment-block">
+            <span class="salutation">Nobles visiteurs,</span>
+            <p>
+                Ces jardins secrets recèlent <strong>neuf mystères</strong> cachés dans les allées du domaine royal.
+                Votre mission : les découvrir, les résoudre, et percer le grand secret de Chambord.
+            </p>
+            <p>
+                À chaque panneau, <strong>scannez le QR code</strong> pour révéler l'énigme.
+                Regardez attentivement, réfléchissez, et entrez votre réponse.
+            </p>
+            <p>
+                Si vous êtes bloqués, des <strong>indices</strong> sont à votre disposition —
+                mais attention, chaque indice demandé ajoutera du temps à votre score final.
+            </p>
+            <div class="signature">— François Ier, Roi de France &amp; des Jardins —</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Règles du jeu -->
+        <div class="rules-block">
+            <h3>Les règles de l'aventure</h3>
+
+            <div class="rule-item">
+                <div class="rule-icon">📱</div>
+                <div class="rule-text">
+                    <strong>Scannez chaque QR code</strong> pour accéder à l'énigme correspondante.
+                    Gardez ce téléphone avec vous tout au long du parcours.
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-icon">🔢</div>
+                <div class="rule-text">
+                    <strong>Trouvez le chiffre caché</strong> dans chaque énigme et entrez-le
+                    pour avancer vers la prochaine.
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-icon">💡</div>
+                <div class="rule-text">
+                    Des <strong>indices progressifs</strong> sont disponibles si vous êtes bloqués.
+                    Chaque indice ajoute <strong>+30 secondes</strong> à votre temps final.
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-icon">⏱️</div>
+                <div class="rule-text">
+                    Votre <strong>temps total</strong> est mesuré sur l'ensemble des neuf énigmes.
+                    Le chronomètre démarre à la première énigme.
+                </div>
+            </div>
+
+            <div class="rule-item">
+                <div class="rule-icon">🏆</div>
+                <div class="rule-text">
+                    Résolvez les neuf mystères pour <strong>percer le grand secret</strong>
+                    et obtenir votre titre de Chevalier des Jardins du Roi !
+                </div>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Invitation à entrer -->
+        <div style="text-align:center; padding: 10px 0 20px;">
+            <div style="font-size: 42px; margin-bottom: 16px;">🚪</div>
+            <p style="font-style:italic; font-size:18px; color:#8b4513; line-height:1.7;">
+                Franchissez les portes du labyrinthe<br>
+                et trouvez le <strong>premier panneau</strong> pour commencer.
+            </p>
+            <div style="margin-top:20px; font-size:28px; letter-spacing:8px; color:#d4af37;">✦ ✦ ✦</div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <span class="footer-fleur">⚜</span>
+        <p>Que la fortune guide vos pas, noble visiteur.</p>
+        <div class="footer-brand">Les Jardins du Roi — Château de Chambord</div>
+    </div>
+
+</div>
+
+</body>
+</html>
