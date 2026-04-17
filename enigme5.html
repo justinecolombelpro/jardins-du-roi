@@ -1,220 +1,648 @@
-<meta charset="UTF-8">
-<div id="jdr5-root">
+<!DOCTYPE html>
 
-<style>
-#jdr5-root * { box-sizing: border-box; }
-#jdr5-root {
-    font-family: Georgia, 'Times New Roman', serif;
-    color: #3d2817;
-    width: 100%;
-    padding: 20px 10px;
-    position: relative;
-}
-#jdr5-root .jdr5-container {
-    max-width: 650px;
-    margin: 0 auto;
-    background: #faf6f0;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-    position: relative;
-    animation: jdr5fadeIn 1s ease-out forwards;
-    opacity: 0;
-    background-image: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(139,69,19,0.03) 2px,rgba(139,69,19,0.03) 4px),repeating-linear-gradient(90deg,transparent,transparent 2px,rgba(139,69,19,0.03) 2px,rgba(139,69,19,0.03) 4px);
-}
-@keyframes jdr5fadeIn { to { opacity: 1; } }
-#jdr5-root .jdr5-corner { position:absolute;width:60px;height:60px;font-size:40px;color:#d4af37;opacity:0.7;pointer-events:none;line-height:1; }
-#jdr5-root .jdr5-corner.tl { top:10px;left:10px; }
-#jdr5-root .jdr5-corner.tr { top:10px;right:10px; }
-#jdr5-root .jdr5-corner.bl { bottom:10px;left:10px; }
-#jdr5-root .jdr5-corner.br { bottom:10px;right:10px; }
-#jdr5-root .jdr5-seal { position:absolute;top:-40px;right:30px;width:100px;height:100px;background:radial-gradient(circle at 35% 35%,#e74c3c,#c0392b,#8b0000);border-radius:50%;box-shadow:0 8px 16px rgba(0,0,0,0.6),inset -4px -4px 8px rgba(0,0,0,0.5),inset 4px 4px 8px rgba(255,255,255,0.15);transform:rotate(-18deg);z-index:10;border:4px solid #7a0000;display:flex;align-items:center;justify-content:center;font-size:36px; }
-#jdr5-root .jdr5-header { background:linear-gradient(135deg,#8b4513 0%,#6b3410 100%);color:#f5e6d3;padding:40px 20px 30px;text-align:center;border-bottom:4px solid #d4af37;position:relative; }
-#jdr5-root .jdr5-timer { position:absolute;top:20px;left:20px;background:rgba(255,255,255,0.3);padding:14px 20px;border-radius:12px;font-size:22px;font-weight:bold;font-family:'Courier New',monospace;box-shadow:0 3px 10px rgba(0,0,0,0.3);backdrop-filter:blur(8px);border:2px solid rgba(212,175,55,0.3);color:#f5e6d3; }
-#jdr5-root .jdr5-fleur { font-size:55px;margin-bottom:15px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));line-height:1.2; }
-#jdr5-root .jdr5-header h2 { font-family:Georgia,serif;font-size:36px !important;font-weight:bold !important;margin-bottom:8px !important;text-shadow:3px 3px 6px rgba(0,0,0,0.4);letter-spacing:3px;text-transform:uppercase;color:#f5e6d3 !important;border:none !important;padding:0 !important;background:none !important; }
-#jdr5-root .jdr5-subtitle { font-size:20px;opacity:0.95;font-style:italic;color:#f5e6d3;margin:0 !important; }
-#jdr5-root .jdr5-progress { background:linear-gradient(to right,#8b4513,#6b3410,#8b4513);padding:18px 25px;text-align:center;color:#f5e6d3;font-size:17px;position:relative;border-bottom:3px solid #d4af37; }
-#jdr5-root .jdr5-progress::before { content:'✦';position:absolute;left:25px;top:50%;transform:translateY(-50%);font-size:22px;color:#d4af37; }
-#jdr5-root .jdr5-progress::after { content:'✦';position:absolute;right:25px;top:50%;transform:translateY(-50%);font-size:22px;color:#d4af37; }
-#jdr5-root .jdr5-dots { display:inline-flex;gap:10px;align-items:center;margin:0 15px; }
-#jdr5-root .jdr5-dot { width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,0.25);border:2px solid #d4af37;display:inline-block; }
-#jdr5-root .jdr5-dot.active { background:#d4af37;box-shadow:0 0 15px #d4af37;transform:scale(1.3); }
-#jdr5-root .jdr5-content { padding:45px 35px; }
-#jdr5-root .jdr5-video-wrap { margin-bottom:40px;border-radius:15px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.35);border:5px solid #d4af37;background:linear-gradient(45deg,#8b4513 0%,#d4af37 50%,#8b4513 100%);padding:5px; }
-#jdr5-root .jdr5-video-inner { background:#3d2817;border-radius:10px;overflow:hidden;position:relative;padding-bottom:56.25%;height:0; }
-#jdr5-root .jdr5-video-inner iframe { position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px; }
-#jdr5-root .jdr5-divider { height:3px;background:linear-gradient(to right,transparent,#d4af37,transparent);margin:40px 0;position:relative; }
-#jdr5-root .jdr5-divider::after { content:'❖';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#faf6f0;color:#d4af37;padding:0 20px;font-size:16px; }
-#jdr5-root .jdr5-answer-box { background:#fff;padding:35px;border-radius:15px;box-shadow:0 8px 25px rgba(0,0,0,0.2);margin-bottom:40px;border:3px solid #d4af37; }
-#jdr5-root .jdr5-answer-box h3 { font-family:Georgia,serif;color:#8b4513 !important;font-size:28px !important;margin-bottom:18px !important;font-weight:bold !important;letter-spacing:1px;border:none !important;padding:0 !important;background:none !important; }
-#jdr5-root .jdr5-answer-row { display:flex;gap:15px;margin-bottom:18px; }
-#jdr5-root .jdr5-input { flex:1;padding:20px;font-size:24px;border:3px solid #d4af37 !important;border-radius:12px;font-family:Georgia,serif;text-align:center;font-weight:bold;outline:none;transition:all 0.3s ease;color:#3d2817;background:#fff;box-shadow:none; }
-#jdr5-root .jdr5-input:focus { border-color:#8b4513 !important;box-shadow:0 0 25px rgba(212,175,55,0.6) !important;transform:scale(1.03); }
-@keyframes jdr5shake { 0%,100%{transform:translateX(0);} 10%,30%,50%,70%,90%{transform:translateX(-10px);} 20%,40%,60%,80%{transform:translateX(10px);} }
-#jdr5-root .jdr5-shake { animation:jdr5shake 0.6s; }
-#jdr5-root .jdr5-btn { padding:20px 40px;background:linear-gradient(135deg,#8b4513 0%,#6b3410 100%);color:#f5e6d3 !important;border:none !important;border-radius:12px;font-size:19px;font-weight:bold;cursor:pointer;transition:all 0.3s ease;font-family:Georgia,serif;box-shadow:0 5px 20px rgba(0,0,0,0.35);text-transform:uppercase;letter-spacing:1px;text-decoration:none !important; }
-#jdr5-root .jdr5-btn:hover { background:linear-gradient(135deg,#6b3410 0%,#8b4513 100%);transform:translateY(-4px);box-shadow:0 8px 25px rgba(0,0,0,0.45);color:#f5e6d3 !important; }
-#jdr5-root .jdr5-next-btn { background:linear-gradient(135deg,#28a745 0%,#218838 100%) !important; }
-#jdr5-root .jdr5-next-btn:hover { background:linear-gradient(135deg,#218838 0%,#28a745 100%) !important; }
-#jdr5-root .jdr5-feedback { margin-top:22px;padding:22px;border-radius:12px;display:none;text-align:center;font-weight:600;font-size:17px;line-height:1.6; }
-#jdr5-root .jdr5-feedback.success { background:#d4edda;color:#155724;border:3px solid #28a745;display:block; }
-#jdr5-root .jdr5-feedback.error { background:#f8d7da;color:#721c24;border:3px solid #dc3545;display:block; }
-#jdr5-root .jdr5-help h3 { font-family:Georgia,serif;color:#8b4513 !important;font-size:26px !important;margin-bottom:20px !important;font-weight:bold !important;border:none !important;padding:0 !important;background:none !important; }
-#jdr5-root .jdr5-note { color:#666;margin-bottom:20px;font-size:16px; }
-#jdr5-root .jdr5-hint { background:linear-gradient(to right,#fff9f0,#fffbf5);border-left:6px solid #d4af37;padding:20px;margin-bottom:15px;border-radius:10px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 3px 10px rgba(0,0,0,0.15); }
-#jdr5-root .jdr5-hint:hover { background:linear-gradient(to right,#fff5e6,#fff9f0);transform:translateX(10px);box-shadow:0 5px 15px rgba(0,0,0,0.2); }
-#jdr5-root .jdr5-hint-header { font-weight:600;color:#8b4513;display:flex;justify-content:space-between;align-items:center;font-size:18px; }
-#jdr5-root .jdr5-hint-body { margin-top:15px;padding-top:15px;border-top:2px solid #e8d5c4;display:none;color:#3d2817;line-height:1.8;font-size:16px; }
-#jdr5-root .jdr5-hint.open .jdr5-hint-body { display:block; }
-#jdr5-root .jdr5-hint.open .jdr5-arrow { transform:rotate(90deg); }
-#jdr5-root .jdr5-arrow { transition:transform 0.3s ease;color:#d4af37;font-size:20px;display:inline-block; }
-#jdr5-root .jdr5-parchment { background:linear-gradient(135deg,#fdf3e3 0%,#f5e6cc 100%);border:2px solid #c8a96e;border-radius:12px;padding:25px 30px;margin-bottom:40px;box-shadow:inset 0 2px 8px rgba(139,69,19,0.1),0 4px 15px rgba(0,0,0,0.15);font-style:italic;line-height:1.8;color:#5a3520;font-size:15px; }
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Énigme 5 - Le Luth de Chambord</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-#jdr5-root .jdr5-rapport{background:linear-gradient(135deg,#fdf8f0,#faf4e8);border:3px solid #d4af37;border-radius:15px;padding:30px 25px;margin-bottom:35px;box-shadow:0 8px 25px rgba(0,0,0,0.15);}
-#jdr5-root .jdr5-list{list-style:none;padding:0;}
-#jdr5-root .jdr5-list li{padding:10px 0 10px 30px;border-bottom:1px solid rgba(212,175,55,0.3);font-size:16px;line-height:1.6;position:relative;color:#3d2817;}
-#jdr5-root .jdr5-list li::before{content:'⚜';position:absolute;left:0;color:#d4af37;font-size:14px;}
-#jdr5-root .jdr5-list li:last-child{border-bottom:none;}
-#jdr5-root .jdr5-animals{display:flex;justify-content:center;gap:30px;margin-top:25px;flex-wrap:wrap;}
-#jdr5-root .jdr5-animal{background:#fff;border:2px solid #d4af37;border-radius:12px;padding:15px 20px;text-align:center;box-shadow:0 3px 10px rgba(0,0,0,0.1);min-width:120px;}
-@media (max-width:600px) {
-    #jdr5-root .jdr5-header h2 { font-size:28px !important; }
-    #jdr5-root .jdr5-timer { position:static;margin-bottom:18px;display:inline-block;font-size:18px; }
-    #jdr5-root .jdr5-seal { width:75px;height:75px;right:15px;top:-30px;font-size:28px; }
-    #jdr5-root .jdr5-answer-row { flex-direction:column; }
-    #jdr5-root .jdr5-btn { width:100%; }
-    #jdr5-root .jdr5-corner { width:40px;height:40px;font-size:30px; }
-    #jdr5-root .jdr5-content { padding:30px 20px; }
-}
+```
+    body {
+        font-family: Georgia, 'Times New Roman', serif;
+        background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c4 100%);
+        color: #3d2817;
+        min-height: 100vh;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '⚜';
+        position: fixed;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 400px;
+        color: #d4af37;
+        opacity: 0.03;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .container {
+        max-width: 650px;
+        margin: 0 auto;
+        background: #faf6f0;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        position: relative;
+        z-index: 1;
+        opacity: 0;
+        animation: fadeIn 1s ease-out forwards;
+        background-image:
+            repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,69,19,0.03) 2px, rgba(139,69,19,0.03) 4px),
+            repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(139,69,19,0.03) 2px, rgba(139,69,19,0.03) 4px);
+        background-color: #faf6f0;
+    }
+
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    .corner-ornament {
+        position: absolute;
+        width: 60px; height: 60px;
+        font-size: 40px;
+        color: #d4af37;
+        opacity: 0.7;
+        pointer-events: none;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+    .corner-ornament.top-left    { top: 10px; left: 10px; }
+    .corner-ornament.top-left::before    { content: '✦'; }
+    .corner-ornament.top-right   { top: 10px; right: 10px; }
+    .corner-ornament.top-right::before   { content: '✦'; }
+    .corner-ornament.bottom-left  { bottom: 10px; left: 10px; }
+    .corner-ornament.bottom-left::before  { content: '✦'; }
+    .corner-ornament.bottom-right { bottom: 10px; right: 10px; }
+    .corner-ornament.bottom-right::before { content: '✦'; }
+
+    .header {
+        background: linear-gradient(135deg, #8b4513 0%, #6b3410 100%);
+        color: #f5e6d3;
+        padding: 40px 20px 30px;
+        text-align: center;
+        border-bottom: 4px solid #d4af37;
+        position: relative;
+    }
+
+    .header h1 {
+        font-family: Georgia, serif;
+        font-size: 36px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        letter-spacing: 3px;
+        text-transform: uppercase;
+    }
+
+    .header .subtitle {
+        font-size: 20px;
+        opacity: 0.95;
+        font-style: italic;
+        font-weight: normal;
+    }
+
+    .fleur-de-lys {
+        font-size: 55px;
+        margin-bottom: 15px;
+        filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    }
+
+    .wax-seal {
+        position: absolute;
+        top: -40px; right: 30px;
+        width: 100px; height: 100px;
+        background: radial-gradient(circle at 35% 35%, #e74c3c, #c0392b, #8b0000);
+        border-radius: 50%;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.6), inset -4px -4px 8px rgba(0,0,0,0.5), inset 4px 4px 8px rgba(255,255,255,0.15);
+        transform: rotate(-18deg);
+        z-index: 10;
+        border: 4px solid #7a0000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+    }
+
+    .timer {
+        position: absolute;
+        top: 20px; left: 20px;
+        background: rgba(255,255,255,0.3);
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-size: 22px;
+        font-weight: bold;
+        font-family: 'Courier New', monospace;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        backdrop-filter: blur(8px);
+        border: 2px solid rgba(212,175,55,0.3);
+    }
+
+    .progress-bar {
+        background: linear-gradient(to right, #8b4513, #6b3410, #8b4513);
+        padding: 18px 25px;
+        text-align: center;
+        color: #f5e6d3;
+        font-size: 17px;
+        position: relative;
+        border-bottom: 3px solid #d4af37;
+    }
+    .progress-bar::before { content: '✦'; position: absolute; left: 25px; font-size: 22px; color: #d4af37; }
+    .progress-bar::after  { content: '✦'; position: absolute; right: 25px; font-size: 22px; color: #d4af37; }
+
+    .progress-dots {
+        display: inline-flex;
+        gap: 10px;
+        align-items: center;
+        margin: 0 15px;
+    }
+
+    .progress-dot {
+        width: 14px; height: 14px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.25);
+        border: 2px solid #d4af37;
+        transition: all 0.3s ease;
+    }
+    .progress-dot.active {
+        background: #d4af37;
+        box-shadow: 0 0 15px #d4af37;
+        transform: scale(1.3);
+    }
+
+    .content { padding: 45px 35px; }
+
+    .video-container {
+        margin-bottom: 40px;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        border: 5px solid #d4af37;
+        background: linear-gradient(45deg, #8b4513 0%, #d4af37 50%, #8b4513 100%);
+        padding: 5px;
+    }
+
+    .video-inner {
+        background: #3d2817;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        padding-top: 56.25%;
+    }
+
+    .video-inner iframe {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .divider {
+        height: 3px;
+        background: linear-gradient(to right, transparent, #d4af37, transparent);
+        margin: 40px 0;
+        position: relative;
+    }
+    .divider::after {
+        content: '❖';
+        position: absolute;
+        left: 50%; top: 50%;
+        transform: translate(-50%, -50%);
+        background: #faf6f0;
+        color: #d4af37;
+        padding: 0 20px;
+        font-size: 16px;
+    }
+
+    /* RAPPORT DU MAÎTRE DE CHASSE */
+    .rapport-box {
+        background: linear-gradient(135deg, #fdf8f0, #faf4e8);
+        border: 3px solid #d4af37;
+        border-radius: 15px;
+        padding: 30px 25px;
+        margin-bottom: 35px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .rapport-box h3 {
+        color: #8b4513;
+        font-size: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-style: italic;
+        letter-spacing: 1px;
+    }
+
+    .rapport-intro {
+        font-style: italic;
+        color: #5a3a20;
+        font-size: 16px;
+        margin-bottom: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(212,175,55,0.4);
+        padding-bottom: 15px;
+    }
+
+    .rapport-box ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .rapport-box ul li {
+        padding: 10px 0 10px 30px;
+        border-bottom: 1px solid rgba(212,175,55,0.3);
+        font-size: 16px;
+        line-height: 1.6;
+        position: relative;
+        color: #3d2817;
+    }
+
+    .rapport-box ul li::before {
+        content: '⚜';
+        position: absolute;
+        left: 0;
+        color: #d4af37;
+        font-size: 14px;
+    }
+
+    .rapport-box ul li:last-child {
+        border-bottom: none;
+        font-weight: bold;
+        color: #8b4513;
+        font-size: 17px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* ANIMAUX VISUELS */
+    .animals-row {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 25px;
+        flex-wrap: wrap;
+    }
+
+    .animal-card {
+        background: #fff;
+        border: 2px solid #d4af37;
+        border-radius: 12px;
+        padding: 15px 20px;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        min-width: 120px;
+    }
+
+    .animal-card .emoji { font-size: 36px; }
+    .animal-card .name { font-weight: bold; color: #8b4513; font-size: 15px; margin-top: 6px; }
+    .animal-card .pattes { color: #666; font-size: 13px; font-style: italic; }
+
+    .answer-section {
+        background: #fff;
+        padding: 35px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        margin-bottom: 40px;
+        border: 3px solid #d4af37;
+    }
+
+    .answer-section h2 {
+        font-family: Georgia, serif;
+        color: #8b4513;
+        font-size: 28px;
+        margin-bottom: 18px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .answer-input {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 18px;
+    }
+
+    input[type="text"] {
+        flex: 1;
+        padding: 20px;
+        font-size: 24px;
+        border: 3px solid #d4af37;
+        border-radius: 12px;
+        font-family: Georgia, serif;
+        text-align: center;
+        transition: all 0.3s ease;
+        font-weight: bold;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #8b4513;
+        box-shadow: 0 0 25px rgba(212,175,55,0.6);
+        transform: scale(1.03);
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+        20%, 40%, 60%, 80% { transform: translateX(10px); }
+    }
+    .shake { animation: shake 0.6s; }
+
+    .btn {
+        padding: 20px 40px;
+        background: linear-gradient(135deg, #8b4513 0%, #6b3410 100%);
+        color: #f5e6d3;
+        border: none;
+        border-radius: 12px;
+        font-size: 19px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: Georgia, serif;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.35);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    .btn:hover { background: linear-gradient(135deg, #6b3410 0%, #8b4513 100%); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0,0,0,0.45); }
+    .btn:active { transform: translateY(-2px); }
+
+    .feedback {
+        margin-top: 22px;
+        padding: 22px;
+        border-radius: 12px;
+        display: none;
+        text-align: center;
+        font-weight: 600;
+        font-size: 17px;
+        line-height: 1.6;
+    }
+    .feedback.success { background: #d4edda; color: #155724; border: 3px solid #28a745; display: block; }
+    .feedback.error   { background: #f8d7da; color: #721c24; border: 3px solid #dc3545; display: block; }
+
+    .next-button { margin-top: 18px; width: 100%; background: linear-gradient(135deg, #28a745 0%, #218838 100%); }
+    .next-button:hover { background: linear-gradient(135deg, #218838 0%, #28a745 100%); }
+
+    .help-section h2 {
+        font-family: Georgia, serif;
+        color: #8b4513;
+        font-size: 26px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    .hint {
+        background: linear-gradient(to right, #fff9f0, #fffbf5);
+        border-left: 6px solid #d4af37;
+        padding: 20px;
+        margin-bottom: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    }
+    .hint:hover { background: linear-gradient(to right, #fff5e6, #fff9f0); transform: translateX(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+
+    .hint-header {
+        font-weight: 600;
+        color: #8b4513;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    .hint-content {
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 2px solid #e8d5c4;
+        display: none;
+        color: #3d2817;
+        line-height: 1.8;
+        font-size: 16px;
+    }
+    .hint.active .hint-content { display: block; }
+    .hint.active .arrow { transform: rotate(90deg); }
+    .arrow { transition: transform 0.3s ease; color: #d4af37; font-size: 20px; }
+
+    .confetti {
+        position: fixed;
+        font-size: 40px;
+        animation: confettiFall 3.5s ease-out forwards;
+        pointer-events: none;
+        z-index: 9999;
+    }
+    @keyframes confettiFall {
+        0%   { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+        .header h1 { font-size: 28px; }
+        .timer { position: static; margin-bottom: 18px; display: inline-block; font-size: 18px; }
+        .wax-seal { width: 75px; height: 75px; right: 15px; top: -30px; font-size: 28px; }
+        .answer-input { flex-direction: column; }
+        .btn { width: 100%; }
+        .corner-ornament { width: 40px; height: 40px; font-size: 30px; }
+        .content { padding: 30px 20px; }
+    }
 </style>
+```
 
-<div class="jdr5-container">
-    <div class="jdr5-corner tl">✦</div>
-    <div class="jdr5-corner tr">✦</div>
-    <div class="jdr5-corner bl">✦</div>
-    <div class="jdr5-corner br">✦</div>
-    <div class="jdr5-seal">🦌</div>
-    <div class="jdr5-header">
-        <div class="jdr5-timer" id="jdr5-timer">⏱️ 00:00</div>
-        <div class="jdr5-fleur">⚜️</div>
-        <h2>Énigme 5</h2>
-        <p class="jdr5-subtitle">La Chasse Royale</p>
+</head>
+<body>
+<div class="container">
+    <div class="corner-ornament top-left"></div>
+    <div class="corner-ornament top-right"></div>
+    <div class="corner-ornament bottom-left"></div>
+    <div class="corner-ornament bottom-right"></div>
+
+```
+<div class="wax-seal">🎵</div>
+
+<div class="header">
+    <div class="timer" id="timer">⏱️ 00:00</div>
+    <div class="fleur-de-lys">⚜️</div>
+    <h1>Énigme 5</h1>
+    <p class="subtitle">Le Luth de Chambord</p>
+</div>
+
+<div class="progress-bar">
+    <div class="progress-dots">
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot active"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
+        <span class="progress-dot"></span>
     </div>
-    <div class="jdr5-progress">
-        <div class="jdr5-dots">
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot active"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
-        <span class="jdr5-dot"></span>
+    <div style="margin-top: 10px; font-size: 15px; opacity: 0.9;">Énigme 5 / 9</div>
+</div>
+
+<div class="content">
+
+    <!-- Vidéo YouTube -->
+    <div class="video-container">
+        <div class="video-inner">
+            <iframe
+                src="https://www.youtube.com/embed/qvfTMUpx9Lo?rel=0&modestbranding=1"
+                title="Énigme 5 - Le Luth de Chambord"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
         </div>
-        <div style="margin-top:10px;font-size:15px;opacity:0.9;">Énigme 5 / 9</div>
     </div>
-    <div class="jdr5-content">
-        <div class="jdr5-video-wrap">
-            <div class="jdr5-video-inner">
-                <iframe src="https://www.youtube.com/embed/vSF9ovBXOEA" title="Énigme 5 - La Chasse Royale" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+    <div class="divider"></div>
+
+    <!-- Section Réponse -->
+    <div class="answer-section">
+        <h2>Votre réponse</h2>
+        <p style="margin-bottom: 20px; color: #666; font-size: 17px;">Quel chiffre se cache dans la partition ?</p>
+
+        <div class="answer-input">
+            <input type="text" id="answerInput" placeholder="?" maxlength="2">
+            <button class="btn" onclick="checkAnswer()">Vérifier</button>
+        </div>
+
+        <div id="feedback" class="feedback"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Section Aide -->
+    <div class="help-section">
+        <h2>💡 Besoin d'aide ?</h2>
+        <p style="color: #666; margin-bottom: 20px; font-size: 16px;">
+            ⚠️ Chaque indice ajoute <strong>+30 secondes</strong> à votre temps
+        </p>
+
+        <div class="hint" onclick="toggleHint(this, 1)">
+            <div class="hint-header">
+                <span>🔍 Indice 1 — Léger</span>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="hint-content">
+                La partition cache un secret…<br><br>
+                La musique ne se lit pas seulement avec les yeux. Parfois, il faut <strong>changer de perspective</strong>.
             </div>
         </div>
-        <div class="jdr5-divider"></div>
-        <div class="jdr5-rapport"><h3 style="color:#8b4513;font-size:18px;text-align:center;margin-bottom:20px;font-style:italic;">📜 Rapport du maître de Chasse</h3><p style="font-style:italic;color:#5a3a20;font-size:16px;margin-bottom:20px;text-align:center;border-bottom:1px solid rgba(212,175,55,0.4);padding-bottom:15px;">"Sire, j'ai observé des animaux près de l'étang royal ce matin."</p><ul class="jdr5-list"><li>18 pattes au total</li><li>Certains étaient des cerfs, d'autres des oiseaux</li><li>J'en ai compté autant d'un que de l'autre</li><li><strong>COMBIEN DE CERFS ?</strong></li></ul><div class="jdr5-animals"><div class="jdr5-animal"><div style="font-size:36px">🦌</div><div style="font-weight:bold;color:#8b4513;margin-top:6px">Cerf</div><div style="color:#666;font-size:13px;font-style:italic">4 pattes</div></div><div class="jdr5-animal"><div style="font-size:36px">🐦</div><div style="font-weight:bold;color:#8b4513;margin-top:6px">Oiseau</div><div style="color:#666;font-size:13px;font-style:italic">2 pattes</div></div></div></div><div class="jdr5-divider"></div>
-        <div class="jdr5-answer-box">
-            <h3>Votre réponse</h3>
-            <p style="margin-bottom:20px;color:#666;font-size:17px;">Combien de cerfs le maître a-t-il vus ?</p>
-            <div class="jdr5-answer-row">
-                <input type="text" id="jdr5-input" class="jdr5-input" placeholder="?" maxlength="1">
-                <button class="jdr5-btn" onclick="jdr5_check()">Vérifier</button>
+
+        <div class="hint" onclick="toggleHint(this, 2)">
+            <div class="hint-header">
+                <span>🔍 Indice 2 — Moyen</span>
+                <span class="arrow">▶</span>
             </div>
-            <div id="jdr5-feedback" class="jdr5-feedback"></div>
-            <button id="jdr5-next" class="jdr5-btn jdr5-next-btn" style="display:none;margin-top:18px;width:100%;" onclick="jdr5_next()">Énigme suivante ➜</button>
+            <div class="hint-content">
+                <strong>Pliez la partition</strong> en accordéon et regardez-la de côté.<br><br>
+                Un chiffre apparaît dans les plis. Regardez bien !
+            </div>
         </div>
-        <div class="jdr5-divider"></div>
-        <div class="jdr5-help">
-            <h3>💡 Besoin d'aide ?</h3>
-            <p class="jdr5-note">⚠️ Chaque indice ajoute <strong>+30 secondes</strong> à votre temps</p>
-            <div class="jdr5-hint" onclick="jdr5_toggle(this,1)"><div class="jdr5-hint-header"><span>🔍 Indice 1 (Léger)</span><span class="jdr5-arrow">&#9658;</span></div><div class="jdr5-hint-body">Il y a autant de cerfs que d'oiseaux.<br><br>Appelez ce nombre <strong>X</strong>.</div></div><div class="jdr5-hint" onclick="jdr5_toggle(this,2)"><div class="jdr5-hint-header"><span>🔍 Indice 2 (Moyen)</span><span class="jdr5-arrow">&#9658;</span></div><div class="jdr5-hint-body">X cerfs × 4 pattes + X oiseaux × 2 pattes = 18<br><br><strong>4X + 2X = 18</strong></div></div><div class="jdr5-hint" onclick="jdr5_toggle(this,3)"><div class="jdr5-hint-header"><span>🔍 Indice 3 (Solution)</span><span class="jdr5-arrow">&#9658;</span></div><div class="jdr5-hint-body">6X = 18 → X = <strong>3</strong><br><br>3 cerfs et 3 oiseaux.<br>3×4 + 3×2 = 12 + 6 = 18 ✅</div></div>
+
+        <div class="hint" onclick="toggleHint(this, 3)">
+            <div class="hint-header">
+                <span>🔍 Indice 3 — Solution</span>
+                <span class="arrow">▶</span>
+            </div>
+            <div class="hint-content">
+                Le chiffre apparu est un <strong>chiffre romain</strong>.<br><br>
+                Les chiffres romains utilisent des lettres :
+                <div class="roman-table">
+                    <div class="roman-cell"><div class="roman">I</div><div class="arabic">= 1</div></div>
+                    <div class="roman-cell"><div class="roman">V</div><div class="arabic">= 5</div></div>
+                    <div class="roman-cell"><div class="roman">X</div><div class="arabic">= 10</div></div>
+                    <div class="roman-cell"><div class="roman">L</div><div class="arabic">= 50</div></div>
+                </div>
+                <br>
+                On additionne de gauche à droite.<br>
+                <strong>VIII</strong> = V + I + I + I = 5 + 1 + 1 + 1 = <strong>8</strong>
+            </div>
         </div>
     </div>
+</div>
+```
+
 </div>
 
 <script>
-(function() {
-    var jdrStart, jdrElapsed = 0, jdrTimer;
-    var jdrHints = {};
+    let startTime, elapsedTime = 0, timerInterval;
+    let hintsUsed = new Set();
 
-    function jdrInit() {
-        var saved = localStorage.getItem('jdrTotalTime');
-        jdrElapsed = saved ? parseInt(saved) : 0;
-        jdrStart = Date.now() - jdrElapsed;
-        jdrTimer = setInterval(jdrTick, 1000);
+    function initTimer() {
+        const savedTime = localStorage.getItem('totalTime');
+        elapsedTime = savedTime ? parseInt(savedTime) : 0;
+        startTime = Date.now() - elapsedTime;
+        timerInterval = setInterval(updateTimer, 1000);
     }
 
-    function jdrTick() {
-        jdrElapsed = Date.now() - jdrStart;
-        localStorage.setItem('jdrTotalTime', jdrElapsed.toString());
-        var s = Math.floor(jdrElapsed / 1000);
-        var m = Math.floor(s / 60);
-        document.getElementById('jdr5-timer').textContent = '⏱️ ' + String(m).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
+    function updateTimer() {
+        elapsedTime = Date.now() - startTime;
+        localStorage.setItem('totalTime', elapsedTime.toString());
+        const seconds = Math.floor(elapsedTime / 1000);
+        const minutes = Math.floor(seconds / 60);
+        const displaySeconds = seconds % 60;
+        document.getElementById('timer').textContent =
+            `⏱️ ${String(minutes).padStart(2,'0')}:${String(displaySeconds).padStart(2,'0')}`;
     }
 
-    window.jdr5_toggle = function(el, n) {
-        var wasOpen = el.classList.contains('open');
-        if (!wasOpen && !jdrHints[n]) { jdrStart -= 30000; jdrHints[n] = true; }
-        el.classList.toggle('open');
-    };
+    function addPenalty() { startTime -= 30000; }
 
-    window.jdr5_check = function() {
-        var input = document.getElementById('jdr5-input');
-        var fb = document.getElementById('jdr5-feedback');
-        var ans = input.value.trim();
-        if (ans === '3') {
-            fb.className = 'jdr5-feedback success';
-            fb.innerHTML = '✅ <strong>BRAVO !</strong><br><br>3 cerfs et 3 oiseaux !<br>4X + 2X = 18 → X = 3 ✅<br><br>Passez à l\'énigme suivante.';
-            
-            document.getElementById("jdr5-next").style.display="block";
-            jdrConfetti();
-        } else if (ans === '') {
-            fb.className = 'jdr5-feedback error';
-            fb.innerHTML = '⚠️ Veuillez entrer une réponse.';
-        } else {
-            fb.className = 'jdr5-feedback error';
-            fb.innerHTML = '❌ <strong>Ce n\'est pas la bonne réponse...</strong><br><br>Relisez bien le rapport du maître de chasse.';
-            input.classList.add('jdr5-shake');
-            setTimeout(function() { input.classList.remove('jdr5-shake'); }, 600);
+    function toggleHint(element, hintNumber) {
+        const wasActive = element.classList.contains('active');
+        if (!wasActive && !hintsUsed.has(hintNumber)) {
+            addPenalty();
+            hintsUsed.add(hintNumber);
         }
-    };
+        element.classList.toggle('active');
+    }
 
-    document.getElementById('jdr5-input').addEventListener('keypress', function(ev) {
-        if (ev.key === 'Enter') jdr5_check();
+    function createConfetti() {
+        const symbols = ['🎵', '⚜️', '✨', '⭐', '🎶'];
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 0.3 + 's';
+                confetti.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }, i * 35);
+        }
+    }
+
+    function checkAnswer() {
+        const input = document.getElementById('answerInput');
+        const feedback = document.getElementById('feedback');
+        const answer = input.value.trim();
+
+        if (answer === '8') {
+            feedback.className = 'feedback success';
+            feedback.innerHTML = `
+                ✅ <strong>BRAVO !</strong><br><br>
+                Vous avez découvert le chiffre caché dans la partition !<br>
+                VIII en chiffres romains = <strong>8</strong> ✅<br><br>
+                Continuez votre exploration des Jardins du Roi !
+            `;
+            createConfetti();
+        } else if (answer === '') {
+            feedback.className = 'feedback error';
+            feedback.innerHTML = '⚠️ Veuillez entrer une réponse.';
+        } else {
+            feedback.className = 'feedback error';
+            feedback.innerHTML = `
+                ❌ <strong>Ce n'est pas la bonne réponse…</strong><br><br>
+                Regardez bien la partition. Avez-vous essayé de la plier et de changer de perspective ?<br>
+                Besoin d'aide ? Consultez les indices ci-dessous.
+            `;
+            input.classList.add('shake');
+            setTimeout(() => input.classList.remove('shake'), 600);
+        }
+    }
+
+    document.getElementById('answerInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') checkAnswer();
     });
 
-    function jdrConfetti() {
-        var sym = ['🦌','⚜️','✨','⭐','🏹'];
-        for (var i = 0; i < 50; i++) {
-            setTimeout(function(idx) {
-                return function() {
-                    var el = document.createElement('div');
-                    el.style.cssText = 'position:fixed;font-size:40px;pointer-events:none;z-index:9999;top:0;';
-                    el.style.left = Math.random() * 100 + '%';
-                    el.textContent = sym[Math.floor(Math.random() * sym.length)];
-                    el.style.animation = 'jdr5confetti ' + (2.5 + Math.random() * 2) + 's ease-out forwards';
-                    document.body.appendChild(el);
-                    setTimeout(function() { el.remove(); }, 4500);
-                };
-            }(i), i * 35);
-        }
-    }
-
-    function jdr5_next() { window.location.href = "enigme6.html"; }
-
-    jdrInit();
-})();
+    window.onload = function() { initTimer(); };
 </script>
-<style>
-@keyframes jdr5confetti { 0% { transform:translateY(-50px) rotate(0deg); opacity:1; } 100% { transform:translateY(100vh) rotate(720deg); opacity:0; } }
-</style>
 
-</div>
+</body>
+</html>
