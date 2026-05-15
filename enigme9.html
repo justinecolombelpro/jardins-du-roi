@@ -38,7 +38,7 @@
         box-shadow: 0 20px 60px rgba(0,0,0,0.4);
         position: relative;
         z-index: 1;
-        opacity: 0;
+        opacity: 1; /* fallback Android : visible immédiatement */
         animation: fadeIn 1s ease-out forwards;
         background-image:
             repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(139,69,19,0.03) 2px, rgba(139,69,19,0.03) 4px),
@@ -46,7 +46,7 @@
         background-color: #faf6f0;
     }
 
-    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
     .corner-ornament {
         position: absolute;
@@ -392,10 +392,12 @@
     <div class="video-container">
         <div class="video-inner">
             <iframe
-                src="https://www.youtube.com/embed/yrQVAefjlkg"
+                src="https://www.youtube.com/embed/yrQVAefjlkg?playsinline=1"
                 title="Énigme 9 — L'Invention Mystère"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowfullscreen>
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
     </div>
@@ -416,7 +418,6 @@
         <button id="conclusionButton" style="display:none; margin-top: 20px; width: 100%; padding: 20px; background: linear-gradient(135deg, #d4af37, #b8960c); color: #3d2817; border: none; border-radius: 12px; font-size: 18px; font-weight: bold; cursor: pointer; font-family: Georgia, serif; letter-spacing: 1px; box-shadow: 0 5px 20px rgba(212,175,55,0.5);" onclick="window.location.href='conclusion.html'">
             ⚜️ Découvrir ce que révèle le code →
         </button>
-    </div>
 
     <div class="divider"></div>
 
@@ -472,8 +473,16 @@
     let startTime, elapsedTime = 0, timerInterval;
     let hintsUsed = new Set();
 
+    // Wrapper localStorage sécurisé (plante en navigation privée sur Android)
+    function storageGet(key) {
+        try { return localStorage.getItem(key); } catch(e) { return null; }
+    }
+    function storageSet(key, value) {
+        try { localStorage.setItem(key, value); } catch(e) { /* silencieux */ }
+    }
+
     function initTimer() {
-        const savedTime = localStorage.getItem('totalTime');
+        const savedTime = storageGet('totalTime');
         elapsedTime = savedTime ? parseInt(savedTime) : 0;
         startTime = Date.now() - elapsedTime;
         timerInterval = setInterval(updateTimer, 1000);
@@ -481,7 +490,7 @@
 
     function updateTimer() {
         elapsedTime = Date.now() - startTime;
-        localStorage.setItem('totalTime', elapsedTime.toString());
+        storageSet('totalTime', elapsedTime.toString());
         const seconds = Math.floor(elapsedTime / 1000);
         const minutes = Math.floor(seconds / 60);
         const displaySeconds = seconds % 60;
